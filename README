@@ -11,6 +11,12 @@ notifier2 = Proc.new do
   puts "I NEED TO SEND OUT AN SMS"
 end
 
+# action be be a Proc object. You can define whatever you want to do 
+Procmon.process("Mail") do |process|
+  process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
+end
+
+# You can specify a code block as well
 Procmon.process("Mail") do |process|
   process.pid = 29124
   process.checks :mem_usage, :above => 100.megabytes do
@@ -18,16 +24,13 @@ Procmon.process("Mail") do |process|
   end
 end
 
-Procmon.process("Mail") do |process|
-  process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
-end
-
+# Using built-in email notifier
 NOTIFICATION_TARGET='ddao@example.com'
 Procmon.process("Mail") do |process|
   process.checks :mem_usage, :above => 100.megabytes, :actions => [Procmon::Notifiers::Email]
 end
 
-# Would be nice if we can do this
+# Would be nice if we can do this as well
 # Procmon.process("Mail") do |process|
 #  process.checks :mem_usage, :above => 100.megabytes do |action|
 #    action.perform(notifier)
@@ -36,3 +39,6 @@ end
 #  process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
 #  process.checks :mem_usage, :above => 100.megabytes, :actions => [Procmon::Notifiers::Email]
 #end
+
+
+
