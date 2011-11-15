@@ -1,3 +1,5 @@
+require 'net/smtp'
+
 module Procmon
   module Notifiers
     class Email < Notifier
@@ -8,8 +10,17 @@ module Procmon
           target = NOTIFICATION_TARGET
         end
 
-        puts "Need to email #{target} the following"
-        puts notification
+        message = <<MESSAGE_END
+From: Procmon <procmon>
+To: #{target}
+Subject: Procmon notification
+
+#{notification}
+MESSAGE_END
+
+        Net::SMTP.start('localhost') do |smtp|
+          smtp.send_message message, 'procmon', target
+        end
       end
     end
   end
