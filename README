@@ -34,7 +34,7 @@ end
 # Procmon.process("Mail") do |process|
 #  process.checks :mem_usage, :above => 100.megabytes do |action|
 #    action.perform(notifier)
-#    action.perform(Procmon::Notifiers::Email, 'someone@eharmony.com')
+#    action.perform(Procmon::Notifiers::Email, 'someone@example.com')
 #  end
 #  process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
 #  process.checks :mem_usage, :above => 100.megabytes, :actions => [Procmon::Notifiers::Email]
