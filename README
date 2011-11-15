@@ -1,7 +1,10 @@
+Procmon is a process monitor written in Ruby. Concepts and design are based on Bluepill and God, but with emphasis on simplicity and extensibility.
+
+Procmon allows you to check on processes and then perform arbitary actions based on the result of the checks. For example, you can send notification when mem usage is too high, or you can restart a process if it's dead, etc. It is not meant to run as a daemon. It is designed to be invoked manually or via cron.
+
 Example of how to use Procmon
 
 require 'procmon'
-
 
 notifier = Proc.new do
   puts "I NEED TO SEND OUT AN EMAIL"
@@ -11,7 +14,7 @@ notifier2 = Proc.new do
   puts "I NEED TO SEND OUT AN SMS"
 end
 
-# action be be a Proc object. You can define whatever you want to do 
+# action can be a Proc object. You can define whatever you want to do 
 Procmon.process("Mail") do |process|
   process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
 end
