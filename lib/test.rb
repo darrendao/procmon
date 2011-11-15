@@ -1,14 +1,13 @@
-Example of how to use Procmon
-
 require 'procmon'
 
+NOTIFICATION_TARGET='ddao@example.com'
 
-notifier = Proc.new do
+notifier = Proc.new do 
   puts "I NEED TO SEND OUT AN EMAIL"
 end
 
-notifier2 = Proc.new do
-  puts "I NEED TO SEND OUT AN SMS"
+notifier2 = Proc.new do 
+  puts "I NEED TO SEND OUT AN EMAIL 2"
 end
 
 Procmon.process("Mail") do |process|
@@ -22,7 +21,6 @@ Procmon.process("Mail") do |process|
   process.checks :mem_usage, :above => 100.megabytes, :actions => [notifier, notifier2]
 end
 
-NOTIFICATION_TARGET='ddao@example.com'
 Procmon.process("Mail") do |process|
   process.checks :mem_usage, :above => 100.megabytes, :actions => [Procmon::Notifiers::Email]
 end
