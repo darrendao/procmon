@@ -15,6 +15,15 @@ module Procmon
       @store ||= Hash.new
     end
 
+    def pid_alive?(pid)
+      begin
+        ::Process.kill(0, pid)
+        true
+      rescue Errno::ESRCH
+        false
+      end
+    end
+
     def memory_usage(pid)
       ps_axu[pid] && ps_axu[pid][IDX_MAP[:rss]].to_f
     end

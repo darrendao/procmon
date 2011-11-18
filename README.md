@@ -40,6 +40,13 @@ Procmon.process("Mail") do |process|
   process.checks :mem_usage, :above => 100.megabytes, :actions => [Procmon::Notifiers::Email]
 end
 
+# Check if a process is alive
+Procmon.process("libvirtd") do |process|
+  process.checks :process_health, :status => "down" do
+    puts "Oh no! My process is not running"
+  end
+end
+
 # Would be nice if we can do this as well
 # Procmon.process("Mail") do |process|
 #  process.checks :mem_usage, :above => 100.megabytes do |action|
