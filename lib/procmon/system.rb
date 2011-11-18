@@ -19,6 +19,10 @@ module Procmon
       ps_axu[pid] && ps_axu[pid][IDX_MAP[:rss]].to_f
     end
 
+    def cpu_usage(pid)
+      ps_axu[pid] && ps_axu[pid][IDX_MAP[:pcpu]].to_f
+    end 
+
     def ps_axu
       # TODO: need a mutex here
       store[:ps_axu] ||= begin

@@ -1,8 +1,10 @@
 module Procmon
   module ProcessConditions
     class ProcessCondition
+      attr_reader :actions
       def initialize(options = {})
         @options = options
+        @actions = options[:actions]
       end
 
       def run(pid)

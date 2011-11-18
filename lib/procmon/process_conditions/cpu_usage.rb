@@ -1,11 +1,6 @@
 module Procmon
   module ProcessConditions
-    class MemUsage < ProcessCondition
-      MB = 1024 ** 2
-      FORMAT_STR = "%d%s"
-      MB_LABEL = "MB"
-      KB_LABEL = "KB"
-
+    class CpuUsage < ProcessCondition
       def initialize(options = {})
         super(options)
         @below = options[:below]
@@ -18,30 +13,21 @@ module Procmon
       end
 
       def run(pid)
-        # rss is on the 5th col
-        System.memory_usage(pid).to_f
+        System.cpu_usage(pid).to_f
       end
 
       def check(value)
         if @below && @above
-          value.kilobytes < @below && value.kilobytes > @above
+          value < @below && value > @above
         elsif @below
-          value.kilobytes < @below 
+          value < @below 
         elsif @above
-          value.kilobytes > @above
-        end
-      end
-
-      def format_value(value)
-        if value.kilobytes >= MB
-          FORMAT_STR % [(value / 1024).round, MB_LABEL]
-        else
-          FORMAT_STR % [value, KB_LABEL]
+          value > @above
         end
       end
 
       def description
-        ret = "Memory usage is "
+        ret = "Cpu usage is "
         conditions = {}
         conditions[:below] = @options[:below] if @options[:below]
         conditions[:above] = @options[:above] if @options[:above]
