@@ -50,7 +50,7 @@ It&apos;s hosted on [rubygems.org][rubygems].
 
     # Checking for percent cpu usage
     Procmon.process("Mail") do |process|
-      process.checks :cpu_usage, :above => 0.1 do
+      process.checks :cpu_usage, :above => 90 do
         puts "This process sure is busy!"
       end
     end
