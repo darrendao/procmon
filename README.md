@@ -54,6 +54,16 @@ It&apos;s hosted on [rubygems.org][rubygems].
         puts "This process sure is busy!"
       end
     end
+
+    # You can have multiple checks in one process block
+    Procmon.process("Mail") do |process|
+      process.checks :cpu_usage, :above => 90 do
+        puts "This process sure is busy!"
+      end
+      process.checks :mem_usage, :above => 500.megabytes do
+        puts "Nom nom nom. I'm eating up all of the memory."
+      end
+    end
  
     # Would be nice if we can do this as well
     # Procmon.process("Mail") do |process|
