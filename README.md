@@ -47,6 +47,13 @@ It&apos;s hosted on [rubygems.org][rubygems].
         puts "Oh no! My process is not running"
       end
     end
+
+    # Checking for percent cpu usage
+    Procmon.process("Mail") do |process|
+      process.checks :cpu_usage, :above => 0.1 do
+        puts "This process sure is busy!"
+      end
+    end
  
     # Would be nice if we can do this as well
     # Procmon.process("Mail") do |process|
